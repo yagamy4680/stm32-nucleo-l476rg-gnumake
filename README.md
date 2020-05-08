@@ -113,3 +113,12 @@ In **Debugger** tab, please fill in these values:
 ![](screenshots/eclipse-44.png)
 
 Then, run current app with debugger.
+
+
+
+
+# Makefile at Top Directory
+
+```text
+$ make GCC_PATH=/Applications/Eclipse.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin
+```

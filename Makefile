@@ -14,7 +14,8 @@
 ######################################
 # target
 ######################################
-TARGET = cubemx
+CUBEMX = cubemx
+TARGET = $(CUBEMX)
 
 
 ######################################
@@ -30,40 +31,40 @@ OPT = -Og
 # paths
 #######################################
 # Build path
-BUILD_DIR = build
+BUILD_DIR = $(CUBEMX)/build
 
 ######################################
 # source
 ######################################
 # C sources
 C_SOURCES =  \
-Core/Src/main.c \
-Core/Src/stm32l4xx_it.c \
-Core/Src/stm32l4xx_hal_msp.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ramfunc.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c \
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c \
-Core/Src/system_stm32l4xx.c  
+$(CUBEMX)/Core/Src/main.c \
+$(CUBEMX)/Core/Src/stm32l4xx_it.c \
+$(CUBEMX)/Core/Src/stm32l4xx_hal_msp.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ex.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_flash_ramfunc.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_dma_ex.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c \
+$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c \
+$(CUBEMX)/Core/Src/system_stm32l4xx.c  
 
 # ASM sources
 ASM_SOURCES =  \
-startup_stm32l476xx.s
+$(CUBEMX)/startup_stm32l476xx.s
 
 
 #######################################
@@ -118,12 +119,12 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
--ICore/Inc \
--IDrivers/STM32L4xx_HAL_Driver/Inc \
--IDrivers/STM32L4xx_HAL_Driver/Inc/Legacy \
--IDrivers/CMSIS/Device/ST/STM32L4xx/Include \
--IDrivers/CMSIS/Include \
--IDrivers/CMSIS/Include
+-I$(CUBEMX)/Core/Inc \
+-I$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Inc \
+-I$(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy \
+-I$(CUBEMX)/Drivers/CMSIS/Device/ST/STM32L4xx/Include \
+-I$(CUBEMX)/Drivers/CMSIS/Include \
+-I$(CUBEMX)/Drivers/CMSIS/Include
 
 
 # compile gcc flags
@@ -144,7 +145,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = STM32L476RGTx_FLASH.ld
+LDSCRIPT = $(CUBEMX)/STM32L476RGTx_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys 
