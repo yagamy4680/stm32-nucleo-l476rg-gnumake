@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "main_wrapper.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +57,23 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+static Context context = {
+    .system_clock_config = SystemClock_Config,
+    .gpio_init = MX_GPIO_Init,
+    .console = { &huart2, MX_USART2_UART_Init },
+    .uart_instances = {
+        { NULL   , NULL },
+        { &huart2, MX_USART2_UART_Init },
+        { NULL   , NULL },
+        { NULL   , NULL },
+        { NULL   , NULL }
+    },
+    .i2c_instances = {
+        {NULL, NULL},
+        {NULL, NULL},
+        {NULL, NULL}
+    }
+};
 /* USER CODE END 0 */
 
 /**
@@ -67,7 +83,7 @@ static void MX_USART2_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  return main_wrapper(&context);
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

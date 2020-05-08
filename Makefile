@@ -16,6 +16,9 @@
 ######################################
 CUBEMX = cubemx
 TARGET = nucleo-l476rg-gnumake
+PROJECT_SRC_DIR = project
+PROJECT_APP_SRC_DIR = $(PROJECT_SRC_DIR)/app
+PROJECT_MIDDLEWARE_SRC_DIR = $(PROJECT_SRC_DIR)/middleware
 
 
 ######################################
@@ -61,6 +64,8 @@ $(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c \
 $(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c \
 $(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c \
 $(CUBEMX)/Core/Src/system_stm32l4xx.c  
+
+C_SOURCES += $(wildcard $(PROJECT_APP_SRC_DIR)/*.c)
 
 # ASM sources
 ASM_SOURCES =  \
@@ -126,6 +131,9 @@ C_INCLUDES =  \
 -I$(CUBEMX)/Drivers/CMSIS/Include \
 -I$(CUBEMX)/Drivers/CMSIS/Include
 
+C_INCLUDES += \
+-I$(PROJECT_APP_SRC_DIR) \
+-I$(PROJECT_MIDDLEWARE_SRC_DIR) \
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
