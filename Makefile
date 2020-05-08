@@ -15,7 +15,7 @@
 # target
 ######################################
 CUBEMX = cubemx
-TARGET = $(CUBEMX)
+TARGET = nucleo-l476rg-gnumake
 
 
 ######################################
@@ -31,7 +31,7 @@ OPT = -Og
 # paths
 #######################################
 # Build path
-BUILD_DIR = $(CUBEMX)/build
+BUILD_DIR = build
 
 ######################################
 # source
