@@ -75,11 +75,13 @@ ifdef GCC_PATH
 CC = $(GCC_PATH)/$(PREFIX)gcc
 AS = $(GCC_PATH)/$(PREFIX)gcc -x assembler-with-cpp
 CP = $(GCC_PATH)/$(PREFIX)objcopy
+OD = $(GCC_PATH)/$(PREFIX)objdump
 SZ = $(GCC_PATH)/$(PREFIX)size
 else
 CC = $(PREFIX)gcc
 AS = $(PREFIX)gcc -x assembler-with-cpp
 CP = $(PREFIX)objcopy
+OD = $(PREFIX)objdump
 SZ = $(PREFIX)size
 endif
 HEX = $(CP) -O ihex
@@ -150,7 +152,8 @@ LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BU
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
-
+	$(CC) --version
+	which $(CC)
 
 #######################################
 # build the application
@@ -171,6 +174,8 @@ $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 	$(SZ) $@
+	echo "ELF information for compiler:"
+	$(OD) -s --section .comment $@
 
 $(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(HEX) $< $@
