@@ -16,9 +16,17 @@
 ######################################
 CUBEMX = cubemx
 TARGET = nucleo-l476rg-gnumake
-PROJECT_SRC_DIR = project
-PROJECT_APP_SRC_DIR = $(PROJECT_SRC_DIR)/app
-PROJECT_MIDDLEWARE_SRC_DIR = $(PROJECT_SRC_DIR)/middleware
+PRJ_DIR = project
+PRJ_APP_SRC_DIR = $(PRJ_DIR)/app
+PRJ_MID_SRC_DIR = $(PRJ_DIR)/middlewares
+PRJ_FRW_DIR = $(PRJ_DIR)/frameworks
+
+
+######################################
+# helpers
+######################################
+# Make does not offer a recursive wildcard function, so here's one:
+rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
 
 ######################################
@@ -65,7 +73,7 @@ $(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c \
 $(CUBEMX)/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_exti.c \
 $(CUBEMX)/Core/Src/system_stm32l4xx.c  
 
-C_SOURCES += $(wildcard $(PROJECT_APP_SRC_DIR)/*.c)
+C_SOURCES += $(wildcard $(PRJ_APP_SRC_DIR)/*.c)
 
 # ASM sources
 ASM_SOURCES =  \
@@ -132,8 +140,8 @@ C_INCLUDES =  \
 -I$(CUBEMX)/Drivers/CMSIS/Include
 
 C_INCLUDES += \
--I$(PROJECT_APP_SRC_DIR) \
--I$(PROJECT_MIDDLEWARE_SRC_DIR) \
+-I$(PRJ_APP_SRC_DIR) \
+-I$(PRJ_MID_SRC_DIR) \
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
@@ -160,8 +168,10 @@ LIBS = -lc -lm -lnosys
 LIBDIR = 
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
+include $(PRJ_FRW_DIR)/littlevgl/source.mk
+
 # default action: build all
-all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+all: xxx $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
 	$(CC) --version
 	which $(CC)
 
@@ -174,6 +184,9 @@ vpath %.c $(sort $(dir $(C_SOURCES)))
 # list of ASM program objects
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
+
+xxx:
+	@echo $(C_SOURCES) | tr ' ' '\n'
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
 	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
